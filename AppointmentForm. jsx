@@ -1,0 +1,48 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+function AppointmentList() {
+
+  const [appointments, setAppointments] =
+    useState([]);
+
+  useEffect(() => {
+
+    fetchAppointments();
+
+  }, []);
+
+  const fetchAppointments = async () => {
+
+    const res = await axios.get(
+      "http://localhost:5000/api/appointments"
+    );
+
+    setAppointments(res.data);
+  };
+
+  return (
+    <div>
+
+      <h2>Appointments</h2>
+
+      {
+        appointments.map((item, index) => (
+          <div key={index}>
+
+            <p>{item.patientName}</p>
+            <p>{item.doctorName}</p>
+            <p>{item.date}</p>
+            <p>{item.time}</p>
+
+            <hr />
+
+          </div>
+        ))
+      }
+
+    </div>
+  );
+}
+
+export default AppointmentList;
